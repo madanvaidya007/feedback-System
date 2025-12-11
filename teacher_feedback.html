@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teacher Feedback Form</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="teacher_feedback.css">
+</head>
+
+<body>
+  <div class="sidebar">
+    <h2>NMCOE</h2>
+    <ul class="menu">
+      <li><a href="dashboard.html">🏠 Dashboard</a></li>
+      <li><a href="feedback.html">📝 Give Feedback</a></li>
+      <li><a href="college_feedback.html">📊 College Feedback</a></li>
+    </ul>
+    <div class="logout-section">
+      <a href="#" id="logoutBtn" class="logout">Logout</a>
+    </div>
+  </div>
+  <div class="dashboard-main">
+  <div class="feedback-container">
+    <h2>Teacher Feedback Form</h2>
+    <h3 id="subjectTitle"></h3>
+
+    <p>Please rate the following aspects of the teacher’s performance:</p>
+
+    <form id="teacherFeedbackForm">
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Sr. No</th>
+            <th>Feedback Question</th>
+            <th>Excellent</th>
+            <th>Very Good</th>
+            <th>Good</th>
+            <th>Fair</th>
+            <th>Poor</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr><td>1</td><td>The teacher is punctual and regular in taking classes.</td>
+            <td><input type="radio" name="q1" required></td><td><input type="radio" name="q1"></td><td><input type="radio" name="q1"></td><td><input type="radio" name="q1"></td><td><input type="radio" name="q1"></td></tr>
+          <tr><td>2</td><td>The teacher is well-prepared for the class.</td>
+            <td><input type="radio" name="q2" required></td><td><input type="radio" name="q2"></td><td><input type="radio" name="q2"></td><td><input type="radio" name="q2"></td><td><input type="radio" name="q2"></td></tr>
+          <tr><td>3</td><td>The teacher explains concepts clearly and effectively.</td>
+            <td><input type="radio" name="q3" required></td><td><input type="radio" name="q3"></td><td><input type="radio" name="q3"></td><td><input type="radio" name="q3"></td><td><input type="radio" name="q3"></td></tr>
+          <tr><td>4</td><td>The teacher encourages student participation and interaction.</td>
+            <td><input type="radio" name="q4" required></td><td><input type="radio" name="q4"></td><td><input type="radio" name="q4"></td><td><input type="radio" name="q4"></td><td><input type="radio" name="q4"></td></tr>
+          <tr><td>5</td><td>The teacher uses suitable teaching aids (PPTs, videos, practical examples, etc.).</td>
+            <td><input type="radio" name="q5" required></td><td><input type="radio" name="q5"></td><td><input type="radio" name="q5"></td><td><input type="radio" name="q5"></td><td><input type="radio" name="q5"></td></tr>
+          <tr><td>6</td><td>The teacher provides guidance and support outside the classroom when needed.</td>
+            <td><input type="radio" name="q6" required></td><td><input type="radio" name="q6"></td><td><input type="radio" name="q6"></td><td><input type="radio" name="q6"></td><td><input type="radio" name="q6"></td></tr>
+          <tr><td>7</td><td>The teacher is fair and impartial in assessment and grading.</td>
+            <td><input type="radio" name="q7" required></td><td><input type="radio" name="q7"></td><td><input type="radio" name="q7"></td><td><input type="radio" name="q7"></td><td><input type="radio" name="q7"></td></tr>
+          <tr><td>8</td><td>The teacher encourages critical thinking and creativity.</td>
+            <td><input type="radio" name="q8" required></td><td><input type="radio" name="q8"></td><td><input type="radio" name="q8"></td><td><input type="radio" name="q8"></td><td><input type="radio" name="q8"></td></tr>
+          <tr><td>9</td><td>The teacher maintains discipline and a positive classroom atmosphere.</td>
+            <td><input type="radio" name="q9" required></td><td><input type="radio" name="q9"></td><td><input type="radio" name="q9"></td><td><input type="radio" name="q9"></td><td><input type="radio" name="q9"></td></tr>
+          <tr><td>10</td><td>The teacher completes the syllabus on time.</td>
+            <td><input type="radio" name="q10" required></td><td><input type="radio" name="q10"></td><td><input type="radio" name="q10"></td><td><input type="radio" name="q10"></td><td><input type="radio" name="q10"></td></tr>
+          <tr><td>11</td><td>The teacher motivates students to learn and perform better.</td>
+            <td><input type="radio" name="q11" required></td><td><input type="radio" name="q11"></td><td><input type="radio" name="q11"></td><td><input type="radio" name="q11"></td><td><input type="radio" name="q11"></td></tr>
+          <tr><td>12</td><td>The teacher is approachable and respectful toward students.</td>
+            <td><input type="radio" name="q12" required></td><td><input type="radio" name="q12"></td><td><input type="radio" name="q12"></td><td><input type="radio" name="q12"></td><td><input type="radio" name="q12"></td></tr>
+          <tr><td>13</td><td>The teacher provides constructive feedback on assignments and exams.</td>
+            <td><input type="radio" name="q13" required></td><td><input type="radio" name="q13"></td><td><input type="radio" name="q13"></td><td><input type="radio" name="q13"></td><td><input type="radio" name="q13"></td></tr>
+          <tr><td>14</td><td>The overall teaching quality of this teacher is satisfactory.</td>
+            <td><input type="radio" name="q14" required></td><td><input type="radio" name="q14"></td><td><input type="radio" name="q14"></td><td><input type="radio" name="q14"></td><td><input type="radio" name="q14"></td></tr>
+          <tr><td>15</td><td>You are satisfied with the teacher’s overall performance.</td>
+            <td><input type="radio" name="q15" required></td><td><input type="radio" name="q15"></td><td><input type="radio" name="q15"></td><td><input type="radio" name="q15"></td><td><input type="radio" name="q15"></td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="suggestion-box">
+        <label for="suggestions"><strong>Additional Suggestions (Optional):</strong></label>
+        <textarea id="suggestions" rows="4" placeholder="Write your feedback or suggestions here..."></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn">Submit</button>
+    </form>
+  </div>
+
+  <script src="teacher_feedback.js"></script>
+  <script>
+    document.getElementById("logoutBtn")?.addEventListener("click", function(){
+      localStorage.removeItem("loggedInUser");
+      window.location.href = "index.html";
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | Student Feedback System</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      background: #f5f8ff;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .login-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .login-box {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      padding: 30px 40px;
+      width: 380px;
+      text-align: center;
+    }
+
+    .login-box h2 {
+      color: #0d6efd;
+      margin-bottom: 25px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button {
+      background: #0d6efd;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background: #084298;
+    }
+
+    .google-login {
+      margin-top: 15px;
+    }
+
+    .divider {
+      margin: 15px 0;
+      font-size: 0.9rem;
+      color: #777;
+      position: relative;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 40%;
+      height: 1px;
+      background: #ccc;
+    }
+
+    .divider::before {
+      left: 0;
+    }
+
+    .divider::after {
+      right: 0;
+    }
+  </style>
+
+  <!-- Google Identity Services -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+
+<body>
+  <nav class="nav-main">
+    <div class="logo">NMCOE Feedback</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li class="nav-auth"><a href="login.html">Login</a></li>
+      <li class="nav-auth"><a href="register.html">Register</a></li>
+      <li class="nav-student" style="display:none"><a href="dashboard.html">Dashboard</a></li>
+      <li class="nav-admin" style="display:none"><a href="admin_dashboard.html">Admin</a></li>
+      <li class="nav-logout" style="display:none"><a href="#" id="globalLogout">Logout</a></li>
+    </ul>
+  </nav>
+  <div class="login-container">
+    <div class="login-box">
+      <h2>Student Login</h2>
+
+      <!-- Normal Login Form -->
+      <form id="loginForm">
+        <input type="text" id="username" placeholder="Enter Username" aria-label="Username" required>
+        <input type="password" id="password" placeholder="Enter Password" aria-label="Password" required>
+        <button type="submit">Login</button>
+      </form>
+
+      <div class="divider">OR</div>
+
+      <!-- Google Login -->
+      <div id="g_id_onload"
+        data-client_id="YOUR_GOOGLE_CLIENT_ID"
+        data-context="signin"
+        data-ux_mode="popup"
+        data-callback="handleGoogleLogin"
+        data-auto_prompt="false">
+      </div>
+
+      <div class="google-login g_id_signin"
+        data-type="standard"
+        data-shape="rectangular"
+        data-theme="outline"
+        data-text="signin_with"
+        data-size="large"
+        data-logo_alignment="left">
+      </div>
+
+      <p style="margin-top:15px;">Don’t have an account? <a href="register.html">Register</a></p>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      var u = null; try { u = JSON.parse(localStorage.getItem("userData")); } catch(e){}
+      var isAdmin = u && u.role === "admin";
+      var isLogged = !!u;
+      document.querySelectorAll('.nav-admin').forEach(function(el){ el.style.display = isAdmin ? 'block' : 'none'; });
+      document.querySelectorAll('.nav-student').forEach(function(el){ el.style.display = isLogged ? 'block' : 'none'; });
+      document.querySelectorAll('.nav-auth').forEach(function(el){ el.style.display = isLogged ? 'none' : 'block'; });
+      document.querySelectorAll('.nav-logout').forEach(function(el){ el.style.display = isLogged ? 'block' : 'none'; });
+      var gl = document.getElementById('globalLogout'); if (gl) { gl.addEventListener('click', function(ev){ ev.preventDefault(); localStorage.removeItem('loggedInUser'); window.location.href = 'index.html'; }); }
+    })();
+    // Manual login
+    document.getElementById("loginForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      try {
+        const res = await fetch('api/login.php', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ username, password }) });
+        const json = await res.json();
+        if (!res.ok || !json || json.ok !== true) { alert("❌ Invalid username or password!"); return; }
+        localStorage.setItem("userData", JSON.stringify(json.user));
+        localStorage.setItem("loggedInUser", json.user.username);
+        alert("✅ Login successful!");
+        if (json.user.role === "admin") window.location.href = "admin_dashboard.html"; else window.location.href = "dashboard.html";
+      } catch (err) {
+        alert('❌ Server error. Please try again.');
+      }
+    });
+
+    // Google Login Handler
+    function handleGoogleLogin(response) {
+      const data = decodeJwt(response.credential);
+
+      const user = {
+        username: data.name,
+        email: data.email,
+        mobile: data.phone_number || "N/A",
+        role: "student",
+        password: "google_oauth"
+      };
+
+      // Save Google user to localStorage
+      localStorage.setItem("userData", JSON.stringify(user));
+      localStorage.setItem("loggedInUser", user.username);
+
+      alert(`✅ Welcome ${user.username}! You are logged in via Google.`);
+      window.location.href = "dashboard.html";
+    }
+
+    // Decode Google JWT
+    function decodeJwt(token) {
+      const base64Url = token.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = decodeURIComponent(
+        atob(base64)
+          .split('')
+          .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+          .join('')
+      );
+      return JSON.parse(jsonPayload);
+    }
+  </script>
+</body>
+</html>

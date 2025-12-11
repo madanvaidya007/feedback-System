@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin Dashboard | Feedback Analytics</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="admin.css">
+
+  <!-- XLSX (Excel export) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- html2canvas & jsPDF for PDF export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <style></style>
+</head>
+<body>
+  <nav class="nav-main">
+    <div class="logo">NMCOE Feedback</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li class="nav-student"><a href="dashboard.html">Dashboard</a></li>
+      <li class="nav-student"><a href="feedback.html">Feedback</a></li>
+      <li class="nav-admin"><a href="admin_dashboard.html">Admin</a></li>
+      <li class="nav-auth"><a href="login.html">Login</a></li>
+      <li class="nav-auth"><a href="register.html">Register</a></li>
+      <li class="nav-logout"><a href="#" id="globalLogout">Logout</a></li>
+    </ul>
+  </nav>
+  <div class="admin-container">
+    <aside class="sidebar">
+      <h2>ADMIN PANEL</h2>
+      <nav>
+        <a href="#" id="menuResults" class="active">📊 Results</a>
+        <a href="#" id="menuSuggestions">💬 Suggestions</a>
+        <a href="#" id="menuProfile">👤 Profile</a>
+        <a href="#" id="menuChangePass">🔑 Change Password</a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <button id="logoutBtn" class="btn small">Logout</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <h1>Feedback Analytics</h1>
+          <p class="muted" id="subtitle">View subject-wise feedback and export reports</p>
+        </div>
+        <div class="logo">
+          <!-- logo will be loaded by JS using LOGO_URL -->
+          <img id="logoImg" alt="logo" style="max-height:48px;">
+        </div>
+      </header>
+
+      <!-- RESULTS SECTION -->
+      <section id="resultsSection" class="section">
+        <div class="controls">
+          <button id="sidebarToggle" class="btn btn-outline">Menu</button>
+          <label for="subjectSelect">Select subject:</label>
+          <select id="subjectSelect"><option value="">-- choose subject --</option></select>
+          <input type="text" id="studentFilter" placeholder="Filter student name">
+          <button id="downloadExcel" class="btn">⬇ Excel</button>
+          <button id="downloadPdfAll" class="btn">📄 PDF (All subjects)</button>
+          <button id="downloadPdfSub" class="btn">📄 PDF (Selected subject)</button>
+        </div>
+
+        <div id="metrics" class="metrics">
+          <div class="metric-card">
+            <div class="metric-title">Subjects</div>
+            <div class="metric-value" id="metricSubjects">0</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-title">Total Ratings</div>
+            <div class="metric-value" id="metricTotalRatings">0</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-title">Excellent Rate</div>
+            <div class="metric-value" id="metricExcellentRate">0%</div>
+          </div>
+        </div>
+
+        <div id="summary">
+          <table id="summaryTable">
+            <thead>
+              <tr><th>Subject</th><th>Excellent %</th><th>Very Good %</th><th>Good %</th><th>Fair %</th><th>Poor %</th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <div id="chartWrap">
+          <div class="chart-card"><canvas id="pieCanvas" width="400" height="300"></canvas></div>
+          <div class="chart-card"><canvas id="barCanvas" width="600" height="300"></canvas></div>
+        </div>
+        <div id="studentTableWrap" class="section"></div>
+      </section>
+
+      <!-- SUGGESTIONS -->
+      <section id="suggestionsSection" class="section hidden">
+        <h2>Suggestions</h2>
+        <ul id="suggestionsList"></ul>
+      </section>
+
+      <!-- PROFILE -->
+      <section id="profileSection" class="section hidden">
+        <h2>Admin Profile</h2>
+        <p><strong>Username:</strong> <span id="adminUser"></span></p>
+        <p><strong>Email:</strong> <span id="adminEmail"></span></p>
+      </section>
+
+      <!-- CHANGE PASSWORD -->
+      <section id="changePassSection" class="section hidden">
+        <h2>Change Password</h2>
+        <input id="oldPass" type="password" placeholder="Old password">
+        <input id="newPass" type="password" placeholder="New password">
+        <input id="confirmPass" type="password" placeholder="Confirm new password">
+        <button id="changePassBtn" class="btn">Update Password</button>
+      </section>
+    </main>
+  </div>
+
+<script src="admin.js"></script>
+<script>
+  (function(){
+    var u = null; try { u = JSON.parse(localStorage.getItem("userData")); } catch(e){}
+    var isAdmin = u && u.role === "admin";
+    var isLogged = !!u;
+    document.querySelectorAll('.nav-admin').forEach(function(el){ el.style.display = isAdmin ? 'block' : 'none'; });
+    document.querySelectorAll('.nav-student').forEach(function(el){ el.style.display = isLogged ? 'block' : 'none'; });
+    document.querySelectorAll('.nav-auth').forEach(function(el){ el.style.display = isLogged ? 'none' : 'block'; });
+    document.querySelectorAll('.nav-logout').forEach(function(el){ el.style.display = isLogged ? 'block' : 'none'; });
+    var gl = document.getElementById('globalLogout'); if (gl) { gl.addEventListener('click', function(ev){ ev.preventDefault(); localStorage.removeItem('loggedInUser'); window.location.href = 'index.html'; }); }
+  })();
+</script>
+</body>
+</html>

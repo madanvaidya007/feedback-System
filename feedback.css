@@ -1,0 +1,132 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: #f8faff;
+  color: #222;
+}
+
+.navbar {
+  background: #0d6efd;
+  color: #fff;
+  padding: 15px;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+.container {
+  width: 90%;
+  max-width: 1000px;
+  background: #fff;
+  margin: 30px auto;
+  padding: 20px 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  text-align: center;
+  color: #0d6efd;
+  margin-bottom: 20px;
+}
+
+.selectors {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+select, label {
+  font-size: 1rem;
+}
+
+select {
+  padding: 8px 12px;
+  border: 2px solid #0d6efd;
+  border-radius: 6px;
+  background: #f9f9f9;
+  color: #333;
+  cursor: pointer;
+}
+
+.table-wrap { width: 100%; overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; text-align: center; min-width: 700px; }
+
+thead {
+  background: #0d6efd;
+  color: #fff;
+}
+thead th { position: sticky; top: 0; z-index: 1; }
+
+th, td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.empty {
+  color: #666;
+  font-style: italic;
+}
+
+button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.fill-btn {
+  background: #198754;
+  color: #fff;
+}
+
+.delete-btn {
+  background: #dc3545;
+  color: #fff;
+}
+
+.fill-btn.done {
+  background: #6c757d;
+}
+
+#addSubjectBtn {
+  background: #0d6efd;
+  color: #fff;
+}
+
+#submitFeedbackBtn {
+  background: #198754;
+  color: #fff;
+}
+
+.actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.progress{position:relative;background:#eef5ff;border:1px solid #dbe9ff;border-radius:10px;height:26px;margin:6px 0 16px}
+.progress-bar{position:absolute;left:0;top:0;height:100%;width:0;background:#0d6efd;border-radius:10px;transition:width .2s ease}
+.progress-text{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:#084298;font-weight:600;font-size:.9rem}
+
+@media (max-width: 768px) {
+  .selectors {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+}

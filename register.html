@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register | Student Feedback System</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="nav-main">
+    <div class="logo">NMCOE Feedback</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li class="nav-auth"><a href="login.html">Login</a></li>
+      <li class="nav-auth"><a href="register.html">Register</a></li>
+      <li class="nav-student" style="display:none"><a href="dashboard.html">Dashboard</a></li>
+      <li class="nav-admin" style="display:none"><a href="admin_dashboard.html">Admin</a></li>
+      <li class="nav-logout" style="display:none"><a href="#" id="globalLogout">Logout</a></li>
+    </ul>
+  </nav>
+
+  <div class="login-container">
+    <div class="login-box">
+      <img src="https://www.pngitem.com/pimgs/m/142-1424369_computer-icons-student-graduate-university-academic-hd-png.png" alt="icon" class="login-icon">
+      <h2>Create Your Account</h2>
+
+      <form id="registerForm">
+        <div class="input-group">
+          <input type="text" id="username" placeholder="Enter Username" aria-label="Username" required>
+        </div>
+        <div class="input-group">
+          <input type="email" id="email" placeholder="Enter Email" aria-label="Email" required>
+        </div>
+        <div class="input-group">
+          <input type="tel" id="mobile" placeholder="10-digit Mobile Number" aria-label="Mobile number" pattern="^[0-9]{10}$" maxlength="10" required>
+        </div>
+        <div class="input-group">
+          <div class="password-row">
+            <input type="password" id="password" placeholder="Create Password" aria-label="Password" required>
+            <button type="button" id="togglePw" class="btn small" aria-label="Show/Hide password">👁</button>
+          </div>
+          <div class="strength"><div id="strengthBar" class="strength-bar"></div><span id="strengthText" class="strength-text">Weak</span></div>
+        </div>
+        <div class="input-group">
+          <input type="password" id="confirmPassword" placeholder="Confirm Password" aria-label="Confirm password" required>
+          <div id="confirmError" class="error-text" aria-live="polite"></div>
+        </div>
+
+        <div class="role-select">
+          <label><input type="radio" name="role" value="student" checked> Student</label>
+          <label><input type="radio" name="role" value="admin"> Admin</label>
+        </div>
+
+        <div class="terms">
+          <label><input type="checkbox" id="acceptTerms" required> I accept the terms and privacy policy</label>
+        </div>
+
+        <button type="submit" id="registerBtn" class="btn-login" disabled>Register</button>
+      </form>
+
+      <p>Already have an account? <a href="login.html">Login</a></p>
+    </div>
+  </div>
+
+  <script>
+  (function(){
+    var u = null; try { u = JSON.parse(localStorage.getItem("userData")); } catch(e){}
+    var isAdmin = u && u.role === "admin";
+    var isLogged = !!u;
+    document.querySelectorAll('.nav-admin').forEach(function(el){ el.style.display = isAdmin ? 'block' : 'none'; });
+    document.querySelectorAll('.nav-student').forEach(function(el){ el.style.display = isLogged ? 'block' : 'none'; });
+    document.querySelectorAll('.nav-auth').forEach(function(el){ el.style.display = isLogged ? 'none' : 'block'; });
+    document.querySelectorAll('.nav-logout').forEach(function(el){ el.style.display = isLogged ? 'block' : 'none'; });
+    var gl = document.getElementById('globalLogout'); if (gl) { gl.addEventListener('click', function(ev){ ev.preventDefault(); localStorage.removeItem('loggedInUser'); window.location.href = 'index.html'; }); }
+  })();
+  document.getElementById("registerForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const username = document.getElementById("username").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const mobile = document.getElementById("mobile").value.trim();
+    const password = document.getElementById("password").value.trim();
+    const confirmPassword = document.getElementById("confirmPassword").value.trim();
+    const role = document.querySelector("input[name='role']:checked").value;
+    const terms = document.getElementById("acceptTerms").checked;
+
+    if (!username || !email || !mobile || !password || !confirmPassword || !terms) { alert("⚠️ Please fill all fields and accept terms!"); return; }
+    if (password !== confirmPassword) { alert("❌ Passwords do not match!"); return; }
+
+    try {
+      const res = await fetch('api/register.php', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, email, mobile, password, role })
+      });
+      const json = await res.json();
+      if (!res.ok || !json || json.ok !== true) {
+        if (json && json.error === 'ADMIN_EXISTS') alert('❌ Admin already exists! Only one admin can register.');
+        else if (json && json.error === 'USER_EXISTS') alert('❌ Username or email already exists!');
+        else alert('❌ Registration failed!');
+        return;
+      }
+      localStorage.setItem("userData", JSON.stringify(json.user));
+      alert("✅ Registration successful!");
+      if (role === "admin") window.location.href = "admin_dashboard.html"; else window.location.href = "dashboard.html";
+    } catch (err) {
+      alert('❌ Server error. Please try again.');
+    }
+  });
+  </script>
+  <script>
+  (async function(){
+    try {
+      const res = await fetch('api/admin_exists.php');
+      const json = await res.json();
+      if (json && json.exists) {
+        const adminOption = document.querySelector("input[value='admin']");
+        if (adminOption) {
+          adminOption.disabled = true;
+          adminOption.parentElement.style.opacity = "0.5";
+          adminOption.parentElement.style.cursor = "not-allowed";
+        }
+      }
+    } catch (e) {}
+  })();
+  // UX helpers
+  const pw = document.getElementById('password');
+  const cpw = document.getElementById('confirmPassword');
+  const sb = document.getElementById('strengthBar');
+  const st = document.getElementById('strengthText');
+  const togglePw = document.getElementById('togglePw');
+  const btn = document.getElementById('registerBtn');
+  const emailInput = document.getElementById('email');
+  const mobileInput = document.getElementById('mobile');
+  const confirmError = document.getElementById('confirmError');
+  const termsChk = document.getElementById('acceptTerms');
+
+  function scorePassword(v){
+    let s=0; if(v.length>=8) s+=1; if(/[A-Z]/.test(v)) s+=1; if(/[a-z]/.test(v)) s+=1; if(/[0-9]/.test(v)) s+=1; if(/[^A-Za-z0-9]/.test(v)) s+=1; return s;
+  }
+  function updateStrength(){
+    const s = scorePassword(pw.value);
+    const pct = (s/5)*100; sb.style.width = pct+'%';
+    st.textContent = s<=2? 'Weak' : s===3? 'Medium' : 'Strong';
+    sb.style.background = s<=2? '#dc3545' : s===3? '#ffc107' : '#28a745';
+  }
+  function validate(){
+    const emailOk = /.+@.+\..+/.test(emailInput.value.trim());
+    const mobileOk = /^[0-9]{10}$/.test(mobileInput.value.trim());
+    const match = pw.value.trim() !== '' && pw.value === cpw.value;
+    confirmError.textContent = match ? '' : 'Passwords do not match';
+    const strong = scorePassword(pw.value) >= 3;
+    btn.disabled = !(emailOk && mobileOk && match && termsChk.checked && strong);
+  }
+  pw.addEventListener('input', () => { updateStrength(); validate(); });
+  cpw.addEventListener('input', validate);
+  emailInput.addEventListener('input', validate);
+  mobileInput.addEventListener('input', validate);
+  termsChk.addEventListener('change', validate);
+  togglePw.addEventListener('click', () => { pw.type = pw.type === 'password' ? 'text' : 'password'; });
+  updateStrength(); validate();
+  </script>
+</body>
+</html>

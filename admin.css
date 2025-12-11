@@ -1,0 +1,79 @@
+/* admin.css - clean minimal layout */
+:root{
+  --blue:#0d6efd; --bg:#f4f7ff; --muted:#6c757d;
+  --card:#ffffff;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter, system-ui, Arial, sans-serif;background:var(--bg);color:#111}
+.admin-container{display:flex;min-height:100vh}
+.sidebar{width:220px;background:var(--blue);color:#fff;padding:24px;display:flex;flex-direction:column;justify-content:space-between}
+.sidebar h2{margin:0 0 10px;font-size:18px}
+.sidebar nav a{display:block;color:#fff;text-decoration:none;padding:8px 0;border-radius:6px}
+.sidebar nav a.active, .sidebar nav a:hover{background:rgba(255,255,255,0.07)}
+.sidebar-bottom{margin-top:20px}
+.logo img{max-width:140px;display:block}
+
+.main{flex:1;padding:20px}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.topbar h1{margin:0;font-size:20px}
+.muted{color:var(--muted);margin:4px 0 0}
+
+.section{background:var(--card);padding:18px;border-radius:10px;box-shadow:0 6px 20px rgba(16,24,40,0.04);margin-bottom:14px}
+.controls{display:flex;gap:10px;align-items:center;margin-bottom:12px}
+.controls label{font-weight:600}
+.controls select{padding:6px;border-radius:6px;border:1px solid #ddd}
+.btn{background:var(--blue);color:#fff;padding:8px 10px;border-radius:6px;border:0;cursor:pointer}
+.btn.small{padding:6px 8px}
+#summaryTable{width:100%;border-collapse:collapse;margin-bottom:12px}
+#summaryTable th, #summaryTable td{padding:8px;border-bottom:1px solid #eee;text-align:left}
+#chartWrap{display:flex;flex-wrap:wrap;gap:20px}
+canvas{max-width:100%}
+.hidden{display:none}
+input[type=password]{display:block;margin:8px 0;padding:8px;border-radius:6px;border:1px solid #ddd;width:320px}
+#suggestionsList{list-style:none;padding:0}
+#suggestionsList li{padding:12px;border-radius:8px;background:#ffffff;margin-bottom:10px;border:1px solid #eee;box-shadow:0 2px 6px rgba(0,0,0,0.08)}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:12px 0}
+.metric-card{background:#fff;border:1px solid #eee;border-radius:10px;padding:12px;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+.metric-title{font-size:12px;color:#666}
+.metric-value{font-size:24px;font-weight:700;color:#222}
+.student-table-card{background:#fff;border:1px solid #eee;border-radius:10px;padding:12px;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+.admin-container{display:grid;grid-template-columns:240px 1fr;gap:20px;min-height:100vh;font-size:clamp(15px,1.1vw,16px)}
+.admin-container .sidebar{position:relative;left:auto;top:auto;width:100%;height:auto}
+.admin-container .section{margin-top:16px}
+.admin-container h2{font-size:20px;line-height:1.3;margin-bottom:12px}
+.admin-container p, .admin-container label{line-height:1.5}
+.main{padding:20px;background:#fff;max-width:1100px;width:100%;margin:0 auto;justify-self:center}
+.sidebar nav a{display:block;padding:12px 14px;border-radius:8px;color:#fff;text-decoration:none;font-size:14px}
+.sidebar nav a.active{background:rgba(255,255,255,0.15)}
+.sidebar nav a:hover{background:rgba(255,255,255,0.2)}
+.controls{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:16px}
+.controls .btn{transition:transform .15s ease, box-shadow .15s ease}
+.controls .btn:hover{transform:translateY(-1px);box-shadow:0 4px 10px rgba(0,0,0,0.08)}
+.controls select{appearance:none;background-image:linear-gradient(45deg, transparent 50%, var(--blue) 50%), linear-gradient(135deg, var(--blue) 50%, transparent 50%);background-position:calc(100% - 15px) calc(1em + 2px), calc(100% - 10px) calc(1em + 2px);background-size:5px 5px; background-repeat:no-repeat}
+.controls label{font-weight:600;color:#333}
+.controls select{padding:10px 12px;border:1px solid #cfe2ff;border-radius:8px;font-size:14px;min-height:36px}
+.controls .btn{padding:10px 14px;font-size:14px;min-height:36px}
+.controls input[type=text]{padding:10px 12px;border:1px solid #cfe2ff;border-radius:8px;font-size:14px;min-height:36px}
+#summary{background:#fff;border:1px solid #eee;border-radius:10px;padding:12px;box-shadow:0 2px 8px rgba(0,0,0,0.06);margin-bottom:20px}
+#summaryTable{width:100%;border-collapse:collapse}
+#summaryTable thead{background:var(--blue);color:#fff}
+#summaryTable th,#summaryTable td{padding:12px;border-bottom:1px solid #eee;text-align:left;font-size:14px}
+#summaryTable tbody tr:nth-child(even){background:#f9fbff}
+#summaryTable tbody tr:hover{background:#f1f5ff}
+.section{margin-top:12px}
+#suggestionsList li strong{color:var(--blue)}
+#profileSection p{margin:6px 0}
+#changePassSection .btn{margin-top:8px}
+@media(max-width:900px){
+  .admin-container{grid-template-columns:1fr}
+  .main{padding:12px}
+  .sidebar{position:fixed;top:56px;left:0;width:80%;max-width:320px;height:calc(100% - 56px);transform:translateX(-100%);transition:transform .2s ease;z-index:10}
+  .admin-container.nav-open .sidebar{transform:translateX(0)}
+}
+.sidebar-toggle{display:none}
+.btn.btn-outline{background:transparent;color:var(--blue);border:1px solid var(--blue)}
+@media(max-width:900px){.sidebar-toggle{display:inline-block}}
+#chartWrap{display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start;justify-content:center}
+#chartWrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));align-items:start}
+#chartWrap canvas{width:100% !important;height:280px !important}
+.chart-card{background:#fff;border:1px solid #eee;border-radius:10px;padding:12px;box-shadow:0 2px 8px rgba(0,0,0,0.06)}

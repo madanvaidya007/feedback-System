@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>College Feedback Form</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="college_feedback.css">
+</head>
+<body>
+  <div class="sidebar">
+    <h2>NMCOE</h2>
+    <ul class="menu">
+      <li><a href="dashboard.html">🏠 Dashboard</a></li>
+      <li><a href="feedback.html">📝 Give Feedback</a></li>
+      <li><a href="college_feedback.html">📊 College Feedback</a></li>
+    </ul>
+    <div class="logout-section">
+      <a href="#" id="logoutBtn" class="logout">Logout</a>
+    </div>
+  </div>
+  <div class="dashboard-main">
+  <div class="feedback-container">
+    <h2>College Feedback Form</h2>
+    <p>Please indicate your agreement with the following statements:</p>
+
+    <form id="feedbackForm">
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Sr. No</th>
+            <th>Feedback Question</th>
+            <th>Excellent</th>
+            <th>Very Good</th>
+            <th>Good</th>
+            <th>Fair</th>
+            <th>Poor</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>The cleanliness and hygiene of the campus are well maintained.</td>
+            <td><input type="radio" name="q1" required></td>
+            <td><input type="radio" name="q1"></td>
+            <td><input type="radio" name="q1"></td>
+            <td><input type="radio" name="q1"></td>
+            <td><input type="radio" name="q1"></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>The classroom and seating arrangements are comfortable.</td>
+            <td><input type="radio" name="q2" required></td>
+            <td><input type="radio" name="q2"></td>
+            <td><input type="radio" name="q2"></td>
+            <td><input type="radio" name="q2"></td>
+            <td><input type="radio" name="q2"></td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Laboratory and practical facilities are adequate and functional.</td>
+            <td><input type="radio" name="q3" required></td>
+            <td><input type="radio" name="q3"></td>
+            <td><input type="radio" name="q3"></td>
+            <td><input type="radio" name="q3"></td>
+            <td><input type="radio" name="q3"></td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>The library has sufficient books, journals, and digital learning resources.</td>
+            <td><input type="radio" name="q4" required></td>
+            <td><input type="radio" name="q4"></td>
+            <td><input type="radio" name="q4"></td>
+            <td><input type="radio" name="q4"></td>
+            <td><input type="radio" name="q4"></td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>The campus Wi-Fi and internet facilities are satisfactory.</td>
+            <td><input type="radio" name="q5" required></td>
+            <td><input type="radio" name="q5"></td>
+            <td><input type="radio" name="q5"></td>
+            <td><input type="radio" name="q5"></td>
+            <td><input type="radio" name="q5"></td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>The canteen provides hygienic and affordable food.</td>
+            <td><input type="radio" name="q6" required></td>
+            <td><input type="radio" name="q6"></td>
+            <td><input type="radio" name="q6"></td>
+            <td><input type="radio" name="q6"></td>
+            <td><input type="radio" name="q6"></td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>Administrative staff are cooperative and helpful.</td>
+            <td><input type="radio" name="q7" required></td>
+            <td><input type="radio" name="q7"></td>
+            <td><input type="radio" name="q7"></td>
+            <td><input type="radio" name="q7"></td>
+            <td><input type="radio" name="q7"></td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td>Communication from the college is clear and timely.</td>
+            <td><input type="radio" name="q8" required></td>
+            <td><input type="radio" name="q8"></td>
+            <td><input type="radio" name="q8"></td>
+            <td><input type="radio" name="q8"></td>
+            <td><input type="radio" name="q8"></td>
+          </tr>
+          <tr>
+            <td>9</td>
+            <td>The college supports extracurricular and co-curricular activities.</td>
+            <td><input type="radio" name="q9" required></td>
+            <td><input type="radio" name="q9"></td>
+            <td><input type="radio" name="q9"></td>
+            <td><input type="radio" name="q9"></td>
+            <td><input type="radio" name="q9"></td>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td>The Training and Placement Cell is active and supportive.</td>
+            <td><input type="radio" name="q10" required></td>
+            <td><input type="radio" name="q10"></td>
+            <td><input type="radio" name="q10"></td>
+            <td><input type="radio" name="q10"></td>
+            <td><input type="radio" name="q10"></td>
+          </tr>
+          <tr>
+            <td>11</td>
+            <td>The college provides adequate guidance for higher studies and career opportunities.</td>
+            <td><input type="radio" name="q11" required></td>
+            <td><input type="radio" name="q11"></td>
+            <td><input type="radio" name="q11"></td>
+            <td><input type="radio" name="q11"></td>
+            <td><input type="radio" name="q11"></td>
+          </tr>
+          <tr>
+            <td>12</td>
+            <td>Internship opportunities and industrial visits are well-organized.</td>
+            <td><input type="radio" name="q12" required></td>
+            <td><input type="radio" name="q12"></td>
+            <td><input type="radio" name="q12"></td>
+            <td><input type="radio" name="q12"></td>
+            <td><input type="radio" name="q12"></td>
+          </tr>
+          <tr>
+            <td>13</td>
+            <td>The overall academic environment of the college is positive.</td>
+            <td><input type="radio" name="q13" required></td>
+            <td><input type="radio" name="q13"></td>
+            <td><input type="radio" name="q13"></td>
+            <td><input type="radio" name="q13"></td>
+            <td><input type="radio" name="q13"></td>
+          </tr>
+          <tr>
+            <td>14</td>
+            <td>You feel proud to be a student of this college.</td>
+            <td><input type="radio" name="q14" required></td>
+            <td><input type="radio" name="q14"></td>
+            <td><input type="radio" name="q14"></td>
+            <td><input type="radio" name="q14"></td>
+            <td><input type="radio" name="q14"></td>
+          </tr>
+          <tr>
+            <td>15</td>
+            <td>You would recommend this college to others.</td>
+            <td><input type="radio" name="q15" required></td>
+            <td><input type="radio" name="q15"></td>
+            <td><input type="radio" name="q15"></td>
+            <td><input type="radio" name="q15"></td>
+            <td><input type="radio" name="q15"></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+
+      <!-- Suggestion Box -->
+      <div class="suggestion-box">
+        <label for="suggestions"><strong>Additional Suggestions (Optional):</strong></label>
+        <textarea id="suggestions" name="suggestions" rows="4" placeholder="Write your feedback or suggestions here..."></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn">Submit</button>
+    </form>
+  </div>
+
+  <script src="college_feedback.js"></script>
+  <script>
+    document.getElementById("logoutBtn")?.addEventListener("click", function(){
+      localStorage.removeItem("loggedInUser");
+      window.location.href = "index.html";
+    });
+  </script>
+</body>
+</html>

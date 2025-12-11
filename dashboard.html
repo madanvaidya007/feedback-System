@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Dashboard | Smart Feedback System</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>NMCOE</h2>
+    <ul class="menu">
+      <li><a href="#">🏠 Dashboard</a></li>
+      <li><a href="feedback.html">📝 Give Feedback</a></li>
+      <li><a href="college_feedback.html">📊 college feedback</a></li>
+      <li><a href="#">📧 Set</a></li>
+    </ul>
+
+    <div class="logout-section">
+      <a href="#" id="logoutBtn" class="logout">Logout</a>
+    </div>
+  </div>
+
+  <!-- Main Dashboard -->
+  <div class="dashboard-main">
+    <nav class="topbar">
+      <p>Nanasaheb Mahadik College of Engineering</p>
+    </nav>
+
+    <div class="dashboard-content">
+      <div class="card welcome-card">
+        <h2>🎓 Welcome to Student Dashboard</h2>
+        <p>From here, you can submit your course feedback and track your submissions.</p>
+      </div>
+    </div>
+     <div class="image-section">
+  <div class="image-gallery">
+    <img src="http://www.nmcoe.org.in/img/gallery/comp/FDP/DSC0758.jpg" alt="Campus Building">
+    <img src="https://media.getmyuni.com/azure/college-images-test/nanasaheb-mahadik-college-of-engineering-nmce-sangli/2079edd702dc4d77a028f45677854a84.jpeg" alt="Building">
+    <img src="https://www.nmcoe.org.in/img/course/electrical.jpg" alt="Lab">
+  </div>
+</div>
+
+  <script>
+  document.getElementById("logoutBtn").addEventListener("click", function() {
+    localStorage.removeItem("loggedInUser");
+    window.location.href = "index.html";
+  });
+  </script>
+
+</body>
+</html>
